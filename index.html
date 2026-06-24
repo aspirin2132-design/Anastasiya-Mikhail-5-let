@@ -91,6 +91,16 @@
   .sw .cap{ font-size:14px; letter-spacing:.16em; text-transform:uppercase; opacity:.72; font-weight:500 }
 
 
+
+  .namefield{ display:block; width:100%; max-width:282px; margin:24px auto 0; font-family:var(--serif);
+    font-size:22px; text-align:center; color:var(--text); background:transparent; border:none;
+    border-bottom:1.5px solid var(--line); padding:10px 6px; outline:none }
+  .namefield:focus{ border-color:var(--text) }
+  .namefield::placeholder{ color:var(--text); opacity:.34 }
+  .textlink{ font-family:var(--serif); font-size:17px; color:var(--text); opacity:.6;
+    text-decoration:underline; text-underline-offset:3px; cursor:pointer }
+  .textlink:hover{ opacity:.9 }
+
   /* poll choices */
   .choices{ display:flex; flex-direction:column; gap:12px; margin:24px auto 6px; max-width:262px }
   .choice{ display:block; text-decoration:none; font-family:var(--serif); font-size:19px; font-weight:500; padding:12px 20px; border:1.5px solid var(--line);
@@ -149,7 +159,7 @@
 </head>
 <body>
 <div class="frame">
-  <div class="counter" id="counter">01 / 09</div>
+  <div class="counter" id="counter">01 / 10</div>
   <div class="rail" id="rail">
 
     <!-- 1 COVER -->
@@ -222,21 +232,6 @@
       </div>
     </section>
 
-    <!-- 7 DRINKS POLL -->
-    <section class="slide">
-      <div class="col">
-        <div class="eyebrow rise">Напитки</div>
-        <div class="rule rise d1"></div>
-        <p class="lead rise d1" style="font-size:clamp(23px,6.8vw,29px)">Что будете пить?</p>
-        <div class="choices rise d2">
-          <a class="choice" href="https://docs.google.com/forms/d/e/1FAIpQLScGucT8yBoZH2o6hs-17jZy25lB9MhqO485shUQM0FD8kHMxg/viewform" target="_blank" rel="noopener">Крепкое</a>
-          <a class="choice" href="https://docs.google.com/forms/d/e/1FAIpQLScGucT8yBoZH2o6hs-17jZy25lB9MhqO485shUQM0FD8kHMxg/viewform" target="_blank" rel="noopener">Слабоалкогольное</a>
-          <a class="choice" href="https://docs.google.com/forms/d/e/1FAIpQLScGucT8yBoZH2o6hs-17jZy25lB9MhqO485shUQM0FD8kHMxg/viewform" target="_blank" rel="noopener">Без алкоголя</a>
-        </div>
-        <p class="note rise d3">Нажмите вариант — ответ попадёт в анкету</p>
-      </div>
-    </section>
-
     <!-- 8 HOST CHAT -->
     <section class="slide">
       <div class="col">
@@ -248,17 +243,44 @@
       </div>
     </section>
 
-    <!-- 9 RSVP -->
+    <!-- NAME -->
+    <section class="slide">
+      <div class="col">
+        <div class="eyebrow rise">Анкета гостя</div>
+        <div class="rule rise d1"></div>
+        <p class="lead rise d1" style="font-size:clamp(24px,7vw,31px)">Как вас зовут?</p>
+        <input id="guestName" class="namefield rise d2" type="text" placeholder="Ваше имя" autocomplete="name" inputmode="text">
+        <p class="note rise d3">Имя подставится в анкету автоматически</p>
+      </div>
+    </section>
+
+    <!-- DRINKS POLL -->
+    <section class="slide">
+      <div class="col">
+        <div class="eyebrow rise">Напитки</div>
+        <div class="rule rise d1"></div>
+        <p class="lead rise d1" style="font-size:clamp(23px,6.8vw,29px)">Что будете пить?</p>
+        <div class="choices rise d2">
+          <button class="choice" type="button" data-val="Крепкое">Крепкое</button>
+          <button class="choice" type="button" data-val="Слабоалкогольное">Слабоалкогольное</button>
+          <button class="choice" type="button" data-val="Безалкогольное">Без алкоголя</button>
+        </div>
+        <p class="note rise d3">Нажмите — откроется заполненная анкета</p>
+      </div>
+    </section>
+
+    <!-- RSVP -->
     <section class="slide">
       <div class="col">
         <div class="eyebrow rise">Будем рады видеть вас</div>
         <div class="rule rise d1"></div>
         <h2 class="label rise d1" style="line-height:1.1">Подтвердите присутствие</h2>
         <p class="sub rise d2">До&nbsp;<b style="font-weight:600">25 июля</b> дайте знать, что будете <svg class="hrt" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-7.2-4.6-9.5-9C.8 8.3 2.6 4.8 6 4.8c2 0 3.3 1.2 4 2.4.7-1.2 2-2.4 4-2.4 3.4 0 5.2 3.5 3.5 7.2C19.2 16.4 12 21 12 21z"/></svg></p>
-        <a class="btn rise d3" href="https://docs.google.com/forms/d/e/1FAIpQLScGucT8yBoZH2o6hs-17jZy25lB9MhqO485shUQM0FD8kHMxg/viewform" target="_blank" rel="noopener">
+        <a class="btn rise d3" id="rsvpYes" href="#">
           <svg class="ic" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>
           Я приду
         </a>
+        <div class="rise d3" style="margin-top:16px"><a id="rsvpNo" class="textlink" href="#">Не смогу прийти</a></div>
       </div>
     </section>
 
@@ -287,7 +309,7 @@
     if(i===cur)return; cur=i;
     slides.forEach((s,k)=>s.classList.toggle('active',k===i));
     dots.forEach((d,k)=>d.classList.toggle('on',k===i));
-    counter.textContent=String(i+1).padStart(2,'0')+' / 09';
+    counter.textContent=String(i+1).padStart(2,'0')+' / 10';
     prev.hidden=i===0; next.hidden=i===slides.length-1;
     if(i>0&&hint)hint.style.display='none';
   }
@@ -295,6 +317,20 @@
   rail.addEventListener('scroll',()=>{cancelAnimationFrame(raf);raf=requestAnimationFrame(()=>{setActive(Math.round(rail.scrollTop/rail.clientHeight));});},{passive:true});
   prev.onclick=()=>go(cur-1); next.onclick=()=>go(cur+1);
   document.addEventListener('keydown',e=>{if(e.key==='ArrowDown'||e.key==='ArrowRight')go(cur+1);if(e.key==='ArrowUp'||e.key==='ArrowLeft')go(cur-1);});
+  // --- Google Form prefill ---
+  const FORM='https://docs.google.com/forms/d/e/1FAIpQLScGucT8yBoZH2o6hs-17jZy25lB9MhqO485shUQM0FD8kHMxg/viewform?usp=pp_url';
+  const E_NAME='entry.1153550102', E_COME='entry.384585684', E_DRINK='entry.1561623288';
+  function openForm(come,drink){
+    let u=FORM;
+    const n=(document.getElementById('guestName')||{}).value||'';
+    if(n.trim()) u+='&'+E_NAME+'='+encodeURIComponent(n.trim());
+    if(come) u+='&'+E_COME+'='+encodeURIComponent(come);
+    if(drink) u+='&'+E_DRINK+'='+encodeURIComponent(drink);
+    const w=window.open(u,'_blank'); if(!w) location.href=u;
+  }
+  document.querySelectorAll('.choice').forEach(c=>c.addEventListener('click',()=>openForm('Да',c.dataset.val)));
+  const ry=document.getElementById('rsvpYes'); if(ry) ry.addEventListener('click',e=>{e.preventDefault();openForm('Да',null);});
+  const rn=document.getElementById('rsvpNo'); if(rn) rn.addEventListener('click',e=>{e.preventDefault();openForm('К сожалению,не сможем',null);});
   window.addEventListener('resize',()=>rail.scrollTop=cur*rail.clientHeight);
 </script>
 </body>
