@@ -93,7 +93,7 @@
 
   /* poll choices */
   .choices{ display:flex; flex-direction:column; gap:12px; margin:24px auto 6px; max-width:262px }
-  .choice{ font-family:var(--serif); font-size:19px; font-weight:500; padding:12px 20px; border:1.5px solid var(--line);
+  .choice{ display:block; text-decoration:none; font-family:var(--serif); font-size:19px; font-weight:500; padding:12px 20px; border:1.5px solid var(--line);
     border-radius:999px; cursor:pointer; background:transparent; color:var(--text); transition:all .2s ease }
   .choice:hover{ border-color:var(--text) }
   .choice.sel{ background:var(--text); color:var(--card); border-color:var(--text) }
@@ -229,10 +229,11 @@
         <div class="rule rise d1"></div>
         <p class="lead rise d1" style="font-size:clamp(23px,6.8vw,29px)">Что будете пить?</p>
         <div class="choices rise d2">
-          <button class="choice" type="button">Крепкое</button>
-          <button class="choice" type="button">Слабоалкогольное</button>
-          <button class="choice" type="button">Без алкоголя</button>
+          <a class="choice" href="https://docs.google.com/forms/d/e/1FAIpQLScGucT8yBoZH2o6hs-17jZy25lB9MhqO485shUQM0FD8kHMxg/viewform" target="_blank" rel="noopener">Крепкое</a>
+          <a class="choice" href="https://docs.google.com/forms/d/e/1FAIpQLScGucT8yBoZH2o6hs-17jZy25lB9MhqO485shUQM0FD8kHMxg/viewform" target="_blank" rel="noopener">Слабоалкогольное</a>
+          <a class="choice" href="https://docs.google.com/forms/d/e/1FAIpQLScGucT8yBoZH2o6hs-17jZy25lB9MhqO485shUQM0FD8kHMxg/viewform" target="_blank" rel="noopener">Без алкоголя</a>
         </div>
+        <p class="note rise d3">Нажмите вариант — ответ попадёт в анкету</p>
       </div>
     </section>
 
@@ -254,7 +255,7 @@
         <div class="rule rise d1"></div>
         <h2 class="label rise d1" style="line-height:1.1">Подтвердите присутствие</h2>
         <p class="sub rise d2">До&nbsp;<b style="font-weight:600">25 июля</b> дайте знать, что будете <svg class="hrt" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-7.2-4.6-9.5-9C.8 8.3 2.6 4.8 6 4.8c2 0 3.3 1.2 4 2.4.7-1.2 2-2.4 4-2.4 3.4 0 5.2 3.5 3.5 7.2C19.2 16.4 12 21 12 21z"/></svg></p>
-        <a class="btn rise d3" href="https://vk.me/join/sp0nnut_86e0zwBaxj1pmW59ZWgCWlvfoHc=" target="_blank" rel="noopener">
+        <a class="btn rise d3" href="https://docs.google.com/forms/d/e/1FAIpQLScGucT8yBoZH2o6hs-17jZy25lB9MhqO485shUQM0FD8kHMxg/viewform" target="_blank" rel="noopener">
           <svg class="ic" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>
           Я приду
         </a>
@@ -294,7 +295,6 @@
   rail.addEventListener('scroll',()=>{cancelAnimationFrame(raf);raf=requestAnimationFrame(()=>{setActive(Math.round(rail.scrollTop/rail.clientHeight));});},{passive:true});
   prev.onclick=()=>go(cur-1); next.onclick=()=>go(cur+1);
   document.addEventListener('keydown',e=>{if(e.key==='ArrowDown'||e.key==='ArrowRight')go(cur+1);if(e.key==='ArrowUp'||e.key==='ArrowLeft')go(cur-1);});
-  document.querySelectorAll('.choice').forEach(c=>c.addEventListener('click',()=>{document.querySelectorAll('.choice').forEach(x=>x.classList.remove('sel'));c.classList.add('sel');}));
   window.addEventListener('resize',()=>rail.scrollTop=cur*rail.clientHeight);
 </script>
 </body>
